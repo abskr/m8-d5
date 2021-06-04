@@ -3,16 +3,20 @@ import AccomodationModel from './schema.js'
 
 const accomodationRouter = express.Router()
 
-accomodationRouter.get('/accomodation', async (req,res, next) => {
+accomodationRouter.get('/', async (req,res, next) => {
   try {
-    const accomodations = await accomodationsModel.find()
-    res.send(accomodations)
+    const accomodations = await AccomodationModel.find()
+    if (accomodations){
+      res.send(accomodations)
+    } else {
+      res.status(404).send("No accomodation yet!")
+    }
   } catch (error) {
     next(error)
   }
 })
 
-accomodationRouter.post('/accomodation', async (req, res, next) => {
+accomodationRouter.post('/', async (req, res, next) => {
   try {
     const newAccomodation = new AccomodationModel(req.body)
     const { _id } = await newAccomodation.save()
@@ -22,7 +26,7 @@ accomodationRouter.post('/accomodation', async (req, res, next) => {
   }
 })
 
-accomodationRouter.get('/accomodation/:accoId', async (req, res, next) => {
+accomodationRouter.get('/:accoId', async (req, res, next) => {
   try {
     const id = req.params.accoId
     const accomodation = await AccomodationModel.findById(id)
@@ -38,7 +42,7 @@ accomodationRouter.get('/accomodation/:accoId', async (req, res, next) => {
   }
 })
 
-accomodationRouter.put('/accomodation/:accoId', async (req, res, next) => {
+accomodationRouter.put('/:accoId', async (req, res, next) => {
   try {
     const accomodation = await AccomodationModel.findByIdAndUpdate(req.params.accoId, req.body, { runValidators: true, new: true})
   } catch (error) {
@@ -46,7 +50,7 @@ accomodationRouter.put('/accomodation/:accoId', async (req, res, next) => {
   }
 })
 
-accomodationRouter.delete('/accomodation/:accoId', async (req, res, next) => {
+accomodationRouter.delete('/:accoId', async (req, res, next) => {
   try {
     const accomodation = await AccomodationModel.findByIdAndDelete(req.params.accoId)
     if (accomodation) {
