@@ -45,6 +45,13 @@ accomodationRouter.get('/:accoId', async (req, res, next) => {
 accomodationRouter.put('/:accoId', async (req, res, next) => {
   try {
     const accomodation = await AccomodationModel.findByIdAndUpdate(req.params.accoId, req.body, { runValidators: true, new: true})
+    if (accomodation) {
+      res.send(`${req.params.accoId} is updated!`)
+    } else {
+      const error = new Error(`${req.params.accoId} is not found!`)
+      error.httpStatusCode = 404
+      next(error)
+    }
   } catch (error) {
     next(error)   
   }

@@ -8,7 +8,7 @@ const AccomodationSchema = new Schema(
     description: {type: String, required: true, trim: true},
     maxGuest: Number,
     city: {type: String, required: true, trim: true}
-  }
+  }, { timestamps: true }
 )
 
 export default model('accomodation', AccomodationSchema)
