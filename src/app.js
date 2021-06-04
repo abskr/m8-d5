@@ -17,11 +17,13 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const apiDocs = path.join(__dirname, "apiDesc.yaml");
+const apiSpec = path.join(__dirname, "apiDesc.yaml");
 
 // const port = 3001 || process.env.PORT;
 
 const app = express();
+
+app.use("/spec", express.static(apiSpec));
 
 app.use(express.json());
 
@@ -30,6 +32,7 @@ app.use(cors());
 app.use(
   OpenApiValidator.middleware({
     apiSpec: "./apiDesc.yaml",
+    apiSpec,
     validateRequests: true, // (default)
     validateResponses: true, // false by default
   })
@@ -38,6 +41,7 @@ app.use(
 app.get("/test", (req, res) => {
   res.status(200).send({ message: "Test success!" });
 });
+
 app.use("/accomodation", accomodationRouter);
 
 app.use(badRequest);
