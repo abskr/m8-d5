@@ -1,11 +1,16 @@
 import express from "express";
 // import mongoDB from "./db/index.js";
-import cors from 'cors'
+import cors from "cors";
 // import mongoose from 'mongoose'
-import { badRequest, notFound, unauthorized, genericError } from "./errorHandlers.js";
-import listEndpoints from 'express-list-endpoints'
+import {
+  badRequest,
+  notFound,
+  unauthorized,
+  genericError,
+} from "./errorHandlers.js";
+import listEndpoints from "express-list-endpoints";
 import accomodationRouter from "./services/accomodation/index.js";
-import * as OpenApiValidator from 'express-openapi-validator'
+import * as OpenApiValidator from "express-openapi-validator";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -20,28 +25,27 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors())
+app.use(cors());
 
 app.use(
   OpenApiValidator.middleware({
-    apiSpec: './apiDesc.yaml',
+    apiSpec: "./apiDesc.yaml",
     validateRequests: true, // (default)
     validateResponses: true, // false by default
-  }),
+  })
 );
 
 app.get("/test", (req, res) => {
-    res.status(200).send({ message: "Test success!" })
-})
-app.use('/accomodation', accomodationRouter)
-
+  res.status(200).send({ message: "Test success!" });
+});
+app.use("/accomodation", accomodationRouter);
 
 app.use(badRequest);
 app.use(notFound);
-app.use(unauthorized)
+app.use(unauthorized);
 app.use(genericError);
 
-console.table(listEndpoints(app))
+console.table(listEndpoints(app));
 
 // app.listen(port, mongoDB(), () =>
 //   console.log(`Example app listening on port port!`)
@@ -59,4 +63,4 @@ console.table(listEndpoints(app))
 //   )
 //   .catch((err) => console.log(err));
 
-export default app
+export default app;
