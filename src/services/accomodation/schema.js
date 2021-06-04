@@ -6,7 +6,7 @@ const AccomodationSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "have to fild"],
+      required: true,
       trim: true,
     },
     description: { type: String, required: true, trim: true },

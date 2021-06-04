@@ -76,12 +76,12 @@ describe("Checking application main endpoints", () => {
   });
 
   const invalidData = {
-    description: "something seomthing",
+    description: "Test",
   };
 
   it("should check that the /accomodation endpoint is NOT allowing POST requests with invalid data", async () => {
     const response = await request.post("/accomodation").send(invalidData);
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(500);
     expect(response.body._id).not.toBeDefined();
   });
 
@@ -104,7 +104,7 @@ describe("Checking application main endpoints", () => {
 
     const response = await request.get("/accomodation");
 
-    const included = response.body.accomodation.some(
+    const included = response.body.some(
       (accomodation) => accomodation._id === accomodationResponse.body._id
     );
 
