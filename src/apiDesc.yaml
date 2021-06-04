@@ -11,6 +11,20 @@ tags:
     description: accomodation operations
 
 paths:
+  /test:
+    get:
+      tags:
+        - test
+      summary: this is the test endpoint
+      description: this is only a test
+      responses:
+        '200':
+          description: connected to the endpoint
+          content:
+            application/json:
+              schema:
+                type: object
+
   /accomodation:
     get:
       tags:
