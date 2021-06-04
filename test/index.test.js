@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import supertest from 'supertest'
 import app from '../src/app'
 import mongoose from 'mongoose'
-import accomodationRouter from "./services/accomodation/index.js";
+import accomodationRouter from "../src/services/accomodation/index.js";
 import AccomodationModel from '../src/services/accomodation/schema.js'
 
 dotenv.config()
