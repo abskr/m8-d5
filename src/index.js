@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
-import app from '../app.js'
+import app from './app.js'
+
+const port = 3001 || process.env.PORT;
 
 mongoose
   .connect(process.env.MONGO_CONNECTION + 'prd', {

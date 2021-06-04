@@ -8,6 +8,23 @@ dotenv.config()
 
 const request = supertest(app)
 
+
+beforeAll((done) => {
+    console.log(process.env.MONGO_CONNECTION)
+    mongoose
+        .connect(process.env.MONGO_CONNECTION + "/test", { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => {
+            console.log("Successfully connected to Atlas in test.")
+            done()
+        })
+})
+
+afterAll(done => {
+    mongoose.connection.dropDatabase(() => {
+        mongoose.connection.close(() => done())
+    })
+})
+
 describe("Stage I - Testing the test env", () => {
 
     it("should test that true is true", () => {
@@ -88,20 +105,4 @@ describe("Checking application main endpoints", () => {
 
     // })
 
-})
-
-beforeAll((done) => {
-    console.log(process.env.MONGO_CONNECTION)
-    mongoose
-        .connect(process.env.MONGO_CONNECTION + "test", { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => {
-            console.log("Successfully connected to Atlas in test.")
-            done()
-        })
-})
-
-afterAll(done => {
-    mongoose.connection.dropDatabase(() => {
-        mongoose.connection.close(() => done())
-    })
 })
