@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "express-list-endpoints": "^5.0.0"
+    "express-list-endpoints": "^5.0.0",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.12.12"
+  },
+  "devDependencies": {
+    "jest": "^27.0.4"
   }
 }

@@ -155,6 +155,8 @@ components:
           type: string
         maxGuest:
           type: number
+        city:
+          type: string
 
     Error:
       type: object
