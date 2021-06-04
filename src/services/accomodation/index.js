@@ -20,13 +20,18 @@ accomodationRouter.post("/", async (req, res, next) => {
   try {
     const newAccomodation = new AccomodationModel(req.body);
     const theNewAccomodation = await newAccomodation.save();
-    if (theNewAccomodation) {
-      res.status(201).send(theNewAccomodation);
-    } else {
-      res.status(400).send(theNewAccomodation);
-    }
+    res.status(201).send(theNewAccomodation);
   } catch (error) {
-    next(error);
+      if (error.name === "ValidationError") {
+      let errors = {};
+
+      Object.keys(error.errors).forEach((key) => {
+        errors[key] = error.errors[key].message;
+      });
+
+      return res.status(400).send(errors);
+    }
+    res.status(500).send("Something went wrong");
   }
 });
 

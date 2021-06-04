@@ -76,7 +76,7 @@ describe("Checking application main endpoints", () => {
   });
 
   const invalidData = {
-    description: "",
+    description: "something seomthing",
   };
 
   it("should check that the /accomodation endpoint is NOT allowing POST requests with invalid data", async () => {
