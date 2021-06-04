@@ -75,35 +75,39 @@ describe("Checking application main endpoints", () => {
     expect(response.body.description).toEqual(validData.description);
   });
 
-  // const invalidData = {
-  //     description: "Test product"
-  // }
+  const invalidData = {
+    description: "",
+  };
 
-  // it("should check that the /products endpoint is NOT allowing POST requests with invalid data", async () => {
-  //     const response = await request.post("/products").send(invalidData)
-  //     expect(response.status).toBe(400)
-  //     expect(response.body._id).not.toBeDefined()
-  // })
+  it("should check that the /accomodation endpoint is NOT allowing POST requests with invalid data", async () => {
+    const response = await request.post("/accomodation").send(invalidData);
+    expect(response.status).toBe(400);
+    expect(response.body._id).not.toBeDefined();
+  });
 
-  // it("should test that the /products endpoint is returning valid data after creating", async () => {
-  //     const response = await request.post("/products").send(validData)
+  it("should test that the /accomodation endpoint is returning valid data after creating", async () => {
+    const response = await request.post("/accomodation").send(validData);
 
-  //     expect(response.body._id).toBeDefined()
+    expect(response.body._id).toBeDefined();
 
-  //     const product = await ProductModel.findById(response.body._id)
+    const accomodation = await AccomodationModel.findById(response.body._id);
 
-  //     expect(product.createdAt).toStrictEqual(new Date(response.body.createdAt))
+    expect(accomodation.createdAt).toStrictEqual(
+      new Date(response.body.createdAt)
+    );
+  });
 
-  // })
+  it("should test that the /accomodation endpoint is returning all the accomodation available", async () => {
+    const accomodationResponse = await request
+      .post("/accomodation")
+      .send(validData);
 
-  // it("should test that the /products endpoint is returning all the products available", async () => {
-  //     const productResponse = await request.post("/products").send(validData)
+    const response = await request.get("/accomodation");
 
-  //     const response = await request.get("/products")
+    const included = response.body.accomodation.some(
+      (accomodation) => accomodation._id === accomodationResponse.body._id
+    );
 
-  //     const included = response.body.products.some(product => product._id === productResponse.body._id)
-
-  //     expect(included).toBe(true)
-
-  // })
+    expect(included).toBe(true);
+  });
 });

@@ -20,7 +20,11 @@ accomodationRouter.post("/", async (req, res, next) => {
   try {
     const newAccomodation = new AccomodationModel(req.body);
     const theNewAccomodation = await newAccomodation.save();
-    res.status(201).send(theNewAccomodation);
+    if (theNewAccomodation) {
+      res.status(201).send(theNewAccomodation);
+    } else {
+      res.status(400).send(theNewAccomodation);
+    }
   } catch (error) {
     next(error);
   }
