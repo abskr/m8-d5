@@ -20,6 +20,8 @@
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
-    "jest": "^27.0.4"
+    "dotenv": "^10.0.0",
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.7"
   }
 }
