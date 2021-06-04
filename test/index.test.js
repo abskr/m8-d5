@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import supertest from 'supertest'
 import app from '../src/app'
 import mongoose from 'mongoose'
+import accomodationRouter from "./services/accomodation/index.js";
 import AccomodationModel from '../src/services/accomodation/schema.js'
 
 dotenv.config()
@@ -69,7 +70,7 @@ describe("Checking application main endpoints", () => {
         const response = await request.post("/accomodation").send(validData)
         expect(response.status).toBe(201)
         console.log('AAAAAA', response.body)
-        // expect(response.body._id).toBeDefined()
+        expect(response.body._id).toBeDefined()
         expect(response.body.description).toEqual(validData.description)
     })
 
