@@ -1,11 +1,14 @@
-import express from 'express'
+import express from "express";
+import mongoDB from "./db/index.js";
 
-const port = 3001 || process.env.PORT
+const port = 3001 || process.env.PORT;
 
-const app = express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get("/", (req, res) => res.send("Hello World!"));
 
-app.listen(port, () => console.log(`Example app listening on port port!`))
+app.listen(port, mongoDB(), () =>
+  console.log(`Example app listening on port port!`)
+);
