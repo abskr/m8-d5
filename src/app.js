@@ -1,7 +1,7 @@
 import express from "express";
 // import mongoDB from "./db/index.js";
 import cors from "cors";
-// import mongoose from 'mongoose'
+import mongoose from "mongoose";
 import {
   badRequest,
   notFound,
