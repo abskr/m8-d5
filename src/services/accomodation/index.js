@@ -9,7 +9,7 @@ accomodationRouter.get("/", async (req, res, next) => {
     if (accomodations) {
       res.send(accomodations);
     } else {
-      console.log("something went wrog");
+      res.status(404).send("No accomodation yet!");
     }
   } catch (error) {
     next(error);
@@ -19,10 +19,11 @@ accomodationRouter.get("/", async (req, res, next) => {
 accomodationRouter.post("/", async (req, res, next) => {
   try {
     const newAccomodation = new AccomodationModel(req.body);
-    const { _id } = await newAccomodation.save();
-    res.status(201).send(`Accomodation is saved with id: ${_id}`);
+    const theNewAccomodation = await newAccomodation.save();
+    res.status(201).send(theNewAccomodation);
   } catch (error) {
-    next(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 });
 
@@ -49,6 +50,13 @@ accomodationRouter.put("/:accoId", async (req, res, next) => {
       req.body,
       { runValidators: true, new: true }
     );
+    if (accomodation) {
+      res.send(`${req.params.accoId} is updated!`);
+    } else {
+      const error = new Error(`${req.params.accoId} is not found!`);
+      error.httpStatusCode = 404;
+      next(error);
+    }
   } catch (error) {
     next(error);
   }
