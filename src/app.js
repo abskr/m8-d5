@@ -14,6 +14,7 @@ import * as OpenApiValidator from "express-openapi-validator";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import usersRouter from "./services/users/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -43,6 +44,7 @@ app.get("/test", (req, res) => {
 });
 
 app.use("/accomodation", accomodationRouter);
+app.use("/users", usersRouter);
 
 app.use(badRequest);
 app.use(notFound);

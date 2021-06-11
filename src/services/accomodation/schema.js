@@ -16,4 +16,4 @@ const AccomodationSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("accomodation", AccomodationSchema);
+export default model("accommodation", AccomodationSchema);

@@ -18,7 +18,7 @@ paths:
       summary: this is the test endpoint
       description: this is only a test
       responses:
-        '200':
+        "200":
           description: connected to the endpoint
           content:
             application/json:
@@ -30,18 +30,18 @@ paths:
       tags:
         - accomodation
       summary: List of accomodation
-      description: returns the full list of accomodation 
+      description: returns the full list of accomodation
       responses:
-        '200': # status code
+        "200": # status code
           description: list successfully fetched!
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Accomodation'
-        '500':
-          $ref: '#/components/responses/GenericServerError'
+                  $ref: "#/components/schemas/Accomodation"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
     post:
       tags:
         - accomodation
@@ -52,15 +52,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Accomodation'
+              $ref: "#/components/schemas/Accomodation"
       responses:
-        '201':
+        "201":
           description: accomodation added!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Accomodation'
-  
+                $ref: "#/components/schemas/Accomodation"
+
   /accomodation/{id}:
     get:
       tags:
@@ -75,14 +75,14 @@ paths:
             type: string
           description: Unique ID from an accomodation
       responses:
-        '200': # status code
+        "200": # status code
           description: accomodation details fetched!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Accomodation'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/Accomodation"
+        "404":
+          $ref: "#/components/responses/NotFound"
     put:
       tags:
         - accomodation
@@ -112,8 +112,8 @@ paths:
                   $ref: "#/components/schemas/Accomodation"
         "404":
           $ref: "#/components/responses/NotFound"
-        '400':
-          $ref: '#/components/responses/BadRequest'
+        "400":
+          $ref: "#/components/responses/BadRequest"
     delete:
       tags:
         - accomodation
@@ -126,12 +126,85 @@ paths:
             type: string
           description: Unique ID of the going-to-be-removed accomodation
       responses:
-        '204': # status code
+        "204": # status code
           description: accomodation removed!
-        '404': # status code
-          $ref: '#/components/responses/NotFound'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+        "404": # status code
+          $ref: "#/components/responses/NotFound"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: List of users
+      description: returns the full list of users
+      responses:
+        "200": # status code
+          description: list successfully fetched!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Users"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Add new user
+      description: let guest create a new account
+      requestBody:
+        description: new user details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      responses:
+        "201":
+          description: user created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: returns a JWT token
+      description: returns the data that was required
+      requestBody:
+        description: token
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      responses:
+        "200":
+          description: this the JWT
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+  /users/me/accommodation:
+    get:
+      tags:
+        - users
+      summary: List of accommodation
+      description: returns the full list of accomodation for single user
+      responses:
+        "200": # status code
+          description: list successfully fetched!
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Accomodation"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
 
 components:
   responses:
@@ -140,25 +213,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     BadRequest:
       description: Some problems with your request
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     Unauthorized:
       description: Bearer token missing or invalid
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     GenericServerError:
       description: A problem on the server occurred
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
   schemas:
     Accomodation:
       type: object
@@ -170,6 +243,19 @@ components:
         maxGuest:
           type: number
         city:
+          type: string
+    Users:
+      type: object
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
           type: string
 
     Error:
